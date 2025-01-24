@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Deepanshu's Ice Stupas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f7f9;
+        }
+
+        .page-title {
+            text-align: center;
+            padding: 20px;
+            color: #2c5a71;
+            font-size: 2.5rem;
+            margin: 20px 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        #map-container {
+            position: relative;
+            height: 600px;
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        #map {
+            height: 100%;
+            width: 100%;
+            z-index: 1;
+        }
+
+        .map-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(28, 69, 138, 0.15);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .sidebar {
+            position: fixed;
+            right: -400px;
+            top: 0;
+            width: 400px;
+            height: 100vh;
+            background: white;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            transition: right 0.3s ease;
+            padding: 20px;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .sidebar.active {
+            right: 0;
+        }
+
+        .close-sidebar {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            cursor: pointer;
+            font-size: 24px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f5f7f9;
+            border-radius: 50%;
+            transition: background 0.3s ease;
+        }
+
+        .close-sidebar:hover {
+            background: #e1e5e9;
+        }
+
+        .marker {
+            width: 32px;
+            height: 32px;
+            background: #4285F4;
+            border: 3px solid white;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .marker:hover {
+            transform: scale(1.2);
+        }
+
+        .marker::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            background: rgba(66, 133, 244, 0.4);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(2.5);
+                opacity: 0;
+            }
+        }
+
+        .location-info {
+            padding: 15px;
+        }
+
+        .location-info h2 {
+            color: #2c5a71;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .location-info img {
+            width: 100%;
+            border-radius: 8px;
+            margin: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .location-info p {
+            line-height: 1.6;
+            color: #4a4a4a;
+            margin-bottom: 20px;
+        }
+
+        .stats-box {
+            background: #f5f7f9;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .stats-box h3 {
+            color: #2c5a71;
+            margin-bottom: 15px;
+        }
+
+        .stats-box p {
+            margin: 10px 0;
+            color: #4a4a4a;
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 1.8rem;
+                padding: 15px;
+                margin: 10px 0;
+            }
+
+            .container {
+                padding: 0 10px;
+                margin: 10px auto;
+            }
+
+            #map-container {
+                height: 400px;
+                border-radius: 8px;
+            }
+
+            .sidebar {
+                width: 100%;
+                right: -100%;
+                max-width: none;
+            }
+
+            .sidebar.active {
+                right: 0;
+                width: 100%;
+            }
+
+            .location-info h2 {
+                font-size: 20px;
+            }
+
+            .stats-box {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1 class="page-title">Deepanshu's Ice Stupas</h1>
+    <div class="container">
+        <div id="map-container">
+            <div id="map"></div>
+            <div class="map-overlay"></div>
+        </div>
+    </div>
+    
+    <div class="sidebar">
+        <span class="close-sidebar">&times;</span>
+        <div class="sidebar-content"></div>
+    </div>
+
+    <script>
+        // Initialize map centered on India
+        const map = L.map('map').setView([23.5937, 78.9629], 4);
+
+        // Add custom tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Custom icon
+        const customIcon = L.divIcon({
+            className: 'marker',
+            iconSize: [32, 32]
+        });
+
+        // Sample data with Ladakh locations
+        const locations = [
+            {
+                position: [34.1526, 77.5771],
+                title: "Leh Ice Stupa",
+                description: "The first Ice Stupa project in Leh, providing essential water to local farmers during the crucial spring season. This innovative structure has revolutionized water conservation in the region.",
+                image: "1.jpg",
+                stats: {
+                    height: "40 meters",
+                    capacity: "1,000,000 liters",
+                    beneficiaries: "200 households",
+                    yearEstablished: "2014"
+                }
+            },
+            {
+                position: [34.2859, 77.6057],
+                title: "Phyang Ice Stupa",
+                description: "Located near Phyang Monastery, this Ice Stupa supports both the monastery's needs and local agricultural activities. It has become a model for sustainable water management.",
+                image: "1.jpg",
+                stats: {
+                    height: "35 meters",
+                    capacity: "800,000 liters",
+                    beneficiaries: "150 households",
+                    yearEstablished: "2015"
+                }
+            }
+        ];
+
+        // Add markers
+        locations.forEach(location => {
+            const marker = L.marker(location.position, {icon: customIcon}).addTo(map);
+            
+            marker.on('click', () => {
+                // Zoom to location
+                map.flyTo(location.position, 12, {
+                    duration: 2,
+                    easeLinearity: 0.25
+                });
+
+                // Update sidebar content
+                updateSidebar(location);
+            });
+        });
+
+        function updateSidebar(location) {
+            const sidebarContent = document.querySelector('.sidebar-content');
+            sidebarContent.innerHTML = `
+                <div class="location-info">
+                    <h2>${location.title}</h2>
+                    <img src="${location.image}" alt="${location.title}">
+                    <p>${location.description}</p>
+                    
+                    <div class="stats-box">
+                        <h3>Project Statistics</h3>
+                        <p><strong>Height:</strong> ${location.stats.height}</p>
+                        <p><strong>Water Capacity:</strong> ${location.stats.capacity}</p>
+                        <p><strong>Beneficiaries:</strong> ${location.stats.beneficiaries}</p>
+                        <p><strong>Established:</strong> ${location.stats.yearEstablished}</p>
+                    </div>
+                </div>
+            `;
+            document.querySelector('.sidebar').classList.add('active');
+        }
+
+        // Close sidebar
+        document.querySelector('.close-sidebar').addEventListener('click', () => {
+            document.querySelector('.sidebar').classList.remove('active');
+        });
+    </script>
+</body>
+</html>
