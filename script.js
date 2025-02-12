@@ -6,11 +6,10 @@ const map = L.map('map').setView([34.1526, 77.5771], 8);
 console.log('Map initialized:', map);
 
 // Add custom tile layer
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap contributors'
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 }).addTo(map);
 
-// Custom icon
 const customIcon = L.divIcon({
     className: 'marker',
     iconSize: [32, 32]
