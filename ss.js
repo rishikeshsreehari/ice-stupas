@@ -53,6 +53,7 @@ const locations = [
         description: "Likir, a village of around 200 households located in Sham Valley, is known for its apricots. At the start of the agricultural season, the village faces a seasonal water shortage, which mainly affects agrarian productivity due to the unpredictability of winter precipitation. In a collaboration with Leh's Irrigation and Flood Control Department, we have successfully installed our automated ice reservoir system in Likir and will continue to monitor it over the next several months."
     }
 ];
+
 // Add markers
 locations.forEach(location => {
     const marker = L.marker(location.position, {icon: customIcon}).addTo(map);
@@ -84,40 +85,12 @@ function updateSidebar(location) {
         </div>
     `;
     document.querySelector('.sidebar').classList.add('active');
-    // Hide left sidebar when marker is clicked
-    leftSidebar.classList.remove('active');
 }
 
-// Close sidebar
 // Close sidebar
 document.querySelector('.close-sidebar').addEventListener('click', () => {
     document.querySelector('.sidebar').classList.remove('active');
 });
-
-// Left sidebar toggle with button visibility
-const leftSidebar = document.querySelector('.left-sidebar');
-const toggleBtn = document.querySelector('.toggle-btn');
-
-toggleBtn.addEventListener('click', () => {
-    leftSidebar.classList.toggle('active');
-});
-
-// Share functions
-function shareOnTwitter() {
-    const url = encodeURIComponent(window.location.href);
-    const text = encodeURIComponent('Check out this interactive village case studies dashboard!');
-    window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
-}
-
-function shareOnLinkedIn() {
-    const url = encodeURIComponent(window.location.href);
-    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank');
-}
-
-function shareOnFacebook() {
-    const url = encodeURIComponent(window.location.href);
-    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
-}
 
 // Add resize handler for map
 window.addEventListener('resize', () => {
@@ -129,10 +102,3 @@ setTimeout(() => {
     map.invalidateSize();
     console.log('Map size recalculated');
 }, 100);
-
-// Show left sidebar on page load after a small delay
-window.addEventListener('load', () => {
-    setTimeout(() => {
-        leftSidebar.classList.add('active');
-    }, 500);
-});

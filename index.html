@@ -17,6 +17,57 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div class="left-sidebar">
+        <div class="left-sidebar-content">
+            <div class="toggle-btn">
+                <span class="arrow">→</span>
+            </div>
+            <div class="info-card">
+                <h2>Interactive Village Case Studies</h2>
+                <div class="card-section">
+                    <p>Welcome to our interactive dashboard, showcasing our ongoing efforts in documenting and analyzing village case studies.</p>
+                </div>
+                
+                <div class="card-section">
+                    <h3>How to Use</h3>
+                    <div class="usage-steps">
+                        <div class="step">
+                            <span class="step-number">1</span>
+                            <p>Click any village marker on the map</p>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">2</span>
+                            <p>First click zooms to location</p>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">3</span>
+                            <p>Second click shows detailed information</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-section">
+                    <h3>Case Study Details Include</h3>
+                    <div class="details-list">
+                        <span class="detail-item">Village Name & Location</span>
+                        <span class="detail-item">Challenges Identified</span>
+                        <span class="detail-item">Implemented Solutions</span>
+                        <span class="detail-item">Project Outcomes</span>
+                    </div>
+                </div>
+                
+                <div class="card-section share-section">
+                    <h3>Share Dashboard</h3>
+                    <div class="share-buttons">
+                        <button onclick="shareOnTwitter()"><img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter">Twitter</button>
+                        <button onclick="shareOnLinkedIn()"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn">LinkedIn</button>
+                        <button onclick="shareOnFacebook()"><img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" alt="Facebook">Facebook</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="map-container">
         <div id="map"></div>
         <div class="map-overlay"></div>
