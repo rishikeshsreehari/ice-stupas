@@ -1,8 +1,8 @@
 // Debug logs
 console.log('Script starting...');
 
-// Initialize map centered on India
-const map = L.map('map').setView([23.5937, 78.9629], 4);
+// Initialize map centered on Ladakh
+const map = L.map('map').setView([34.1526, 77.5771], 8);
 console.log('Map initialized:', map);
 
 // Add custom tile layer
@@ -16,31 +16,42 @@ const customIcon = L.divIcon({
     iconSize: [32, 32]
 });
 
-// Sample data with Ladakh locations
+// Updated locations data
 const locations = [
     {
-        position: [34.1526, 77.5771],
-        title: "Leh Ice Stupa",
-        description: "The first Ice Stupa project in Leh, providing essential water to local farmers during the crucial spring season. This innovative structure has revolutionized water conservation in the region.",
-        image: "1.jpg",
-        stats: {
-            height: "40 meters",
-            capacity: "1,000,000 liters",
-            beneficiaries: "200 households",
-            yearEstablished: "2014"
-        }
+        position: [34.5506299, 76.5868774],
+        title: "Ayee Village",
+        description: "We have successfully installed our automation system in Ayee village, located in Nubra Valley. Three fountains are now spraying water, and with the recent cold temperatures, ice has finally started to form. Ayee has approximately 40 households that rely on spring water for their needs. For the past five winters, the village has been building ice reservoirs, led by the Youth Association. Last winter, we connected with the community and conducted a preliminary site survey. During our visit, we observed their ice structure and discussed the challenges they faced during the construction process and potential improvements. This year, the project is funded by @nabardonline, and our entire team traveled to Ayee to set up the system. We also conducted drone surveys, taught the villagers how to operate the system, and addressed any issues on-site."
     },
     {
-        position: [34.2859, 77.6057],
-        title: "Phyang Ice Stupa",
-        description: "Located near Phyang Monastery, this Ice Stupa supports both the monastery's needs and local agricultural activities. It has become a model for sustainable water management.",
-        image: "1.jpg",
-        stats: {
-            height: "35 meters",
-            capacity: "800,000 liters",
-            beneficiaries: "150 households",
-            yearEstablished: "2015"
-        }
+        position: [33.8324728, 77.854631],
+        title: "Igoo Village",
+        description: "Our primary motive this winter was to implement a scalable and easy to maintain ice reservoir that can function autonomously in any remote environment. Contrary to expectations, this meant we had to pick our pilot sites so that they were representative of some of the hardest locations to build ice reservoirs worldwide. Igoo was one such location. More than 2 months have passed since our automation system began constructing Igoo's ice reservoir. Our expectation was that our automated ice reservoir will spray to freeze water only when weather conditions are ideal and would keep the pipeline free of water during the rest of the time. However, for only half this duration, the automated ice reservoir was operating as expected. The rest of the days it was either being manually operated or the fountain pipeline system was frozen."
+    },
+    {
+        position: [34.2164113, 76.8936481],
+        title: "Ursi Village",
+        description: "Ursi is a small village located in the mountains between the Zanskar and Indus rivers. With around 20 households situated at an altitude of 3,700 meters, the village relies on spring water for sustenance. However, residents have been facing significant water shortages at the beginning of the agricultural season. Many locals have reported that these issues have developed over the past two decades, negatively impacting their livelihoods. To address these challenges, the community began constructing ice reservoirs a few years ago, achieving moderate success. This year, with funding from @mercycorps, we have installed our automated system in Ursi. The system is now operational and successfully constructing ice during the cold weather periods."
+    },
+    {
+        position: [33.7678834, 77.8599679],
+        title: "Tunah Village",
+        description: "No description available"
+    },
+    {
+        position: [34.0052618, 77.7901385],
+        title: "Sakti Village",
+        description: "Sakti is a large village with approximately 800 households, spread across the valleys of Chang La and Wari La Passes. The residents have traditionally relied on ice terraces for their agricultural water needs, particularly from the Wari La side, which features several layers of stone walls built down the valley. This year, with the assistance of the Irrigation and Flood Control Department, we have established an automated ice reservoir system, which was inaugurated last week."
+    },
+    {
+        position: [34.035584, 77.7186712],
+        title: "Stakmo Village",
+        description: "No description"
+    },
+    {
+        position: [34.2989302, 77.1748343],
+        title: "Likir Village",
+        description: "Likir, a village of around 200 households located in Sham Valley, is known for its apricots. At the start of the agricultural season, the village faces a seasonal water shortage, which mainly affects agrarian productivity due to the unpredictability of winter precipitation. In a collaboration with Leh's Irrigation and Flood Control Department, we have successfully installed our automated ice reservoir system in Likir and will continue to monitor it over the next several months."
     }
 ];
 
@@ -71,26 +82,7 @@ function updateSidebar(location) {
     sidebarContent.innerHTML = `
         <div class="location-info">
             <h2>${location.title}</h2>
-            
-            <img src="${location.image}" alt="${location.title}">
             <p>${location.description}</p>
-            
-            <div class="video-container">
-                <iframe 
-                    src="https://www.youtube.com/embed/gvjJ39s53rk"
-                    title="Ice Stupa Video"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen>
-                </iframe>
-            </div>
-            
-            <div class="stats-box">
-                <h3>Project Statistics</h3>
-                <p><strong>Height:</strong> <span>${location.stats.height}</span></p>
-                <p><strong>Water Capacity:</strong> <span>${location.stats.capacity}</span></p>
-                <p><strong>Beneficiaries:</strong> <span>${location.stats.beneficiaries}</span></p>
-                <p><strong>Established:</strong> <span>${location.stats.yearEstablished}</span></p>
-            </div>
         </div>
     `;
     document.querySelector('.sidebar').classList.add('active');
