@@ -57,7 +57,7 @@ const locations = [
             efficiency: "Not measured",
             fundedBy: "Mercy Corps Ventures"
         },
-        image: "images/ursi.jpg"
+        image: "images/igoo1.jpg"
     },
     {
         position: [33.7639167, 77.8610556],
@@ -71,7 +71,7 @@ const locations = [
             efficiency: "Data not available",
             fundedBy: "Mercy Corps Ventures"
         },
-        image: "images/tunah.jpg"
+        image: "images/tuna1.jpg"
     },
     {
         position: [34.06350485, 77.82494797],
@@ -85,7 +85,7 @@ const locations = [
             efficiency: "6%",
             fundedBy: "Irrigation and Flood Control Department"
         },
-        image: "images/sakti.jpg"
+        image: "images/sakti1.jpg"
     },
     {
         position: [34.12639019, 77.70943888],
@@ -99,7 +99,7 @@ const locations = [
             efficiency: "17%",
             fundedBy: "Mercy Corps Ventures"
         },
-        image: "images/stakmo.jpg"
+        image: "images/stakmo1.jpg"
     },
     {
         position: [34.31777778, 77.23805556],
